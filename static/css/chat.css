@@ -1,0 +1,58 @@
+#recordButton:hover {
+    cursor: pointer;
+}
+#chatbox {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+#userInput {
+    width: 80%;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#textInput {
+    border: none;
+    border-bottom: 3px solid black;
+    font-family: monospace;
+    font-size: 17px;
+}
+.userText {
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: right;
+    line-height: 30px;
+}
+.userText span {
+    background-color: #839496;
+    padding: 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+.botText {
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
+}
+.botText span {
+    background-color: #d336c6ab;
+    padding: 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+#tidbit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+}
+.boxed {
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+}

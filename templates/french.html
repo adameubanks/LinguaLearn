@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block title %}Français{% endblock %}
+{% block content %}
+<h1 align="center"><b>LinguaLearn - Français</b></h1>
+<br><br>
+<div class="boxed">
+    <div id="chatbox">
+        <p class="botText">
+        <span>Bonjour, je suis votre professeur de français. Comment allez-vous aujourd'hui ?</span>
+        </p>
+    </div>
+    <div id="userInput">
+        <input align="center" id="textInput" class="form-control" type="text" name="msg" placeholder="Ecrire ..." /><br>
+        <img id="recordButton" src="static/img/record.svg" height="64px" width="64px" onclick="toggleRecording()">
+    </div></div>
+    <script>
+    var isRecording = false;
+    var recognition;
+
+    $("#textInput").keydown(function (e) {
+      console.log(e);
+      if (e.key == 'Enter') {
+        getBotResponse();
+      }
+    });
+
+    function toggleRecording() {
+      var recordButton = document.getElementById('recordButton');
+
+      if (!isRecording) {
+        if (window.hasOwnProperty('webkitSpeechRecognition')) {
+          recognition = new webkitSpeechRecognition();
+
+          recognition.continuous = true;
+          recognition.interimResults = false;
+
+          recognition.lang = 'fr-FR';
+          recognition.start();
+
+          recognition.onresult = function (e) {
+            document.getElementById('textInput').value += e.results[0][0].transcript + ' ';
+            recognition.stop();
+          };
+
+          recognition.onerror = function (e) {
+            console.log('error', e);
+            recognition.stop();
+          };
+
+          recognition.onend = function (e) {
+            console.log('ended', e);
+            if (isRecording){
+              recognition.start();
+            }
+          };
+        }
+        recordButton.src = 'static/img/stop.svg';
+        isRecording = true;
+      }
+      else {
+        recordButton.src = 'static/img/record.svg';
+        recognition.stop();
+        isRecording = false;
+        getBotResponse();
+      }
+    };
+    
+    function getBotResponse() {
+      var rawText = $("#textInput").val();
+      var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+      $("#textInput").val("");
+      $("#chatbox").append(userHtml);
+      document
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
+      $.get("/get", { msg: rawText }).done(function (data) {
+        var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+        $("#chatbox").append(botHtml);
+        document
+          .getElementById("userInput")
+          .scrollIntoView({ block: "start", behavior: "smooth" });
+          var speech = new SpeechSynthesisUtterance(data);
+          speech.lang = 'fr-FR';
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(speech);
+      });
+    }
+    </script>
+{% endblock %}
