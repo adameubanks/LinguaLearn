@@ -23,7 +23,6 @@ histoire = [{"parts":
 
 def get_response(msg, lang):
     if lang == 'es':
-        chat.set_chat_lang('es')
         chat = model.start_chat(history=historia)
         try:
             response = chat.send_message(msg)
@@ -34,7 +33,6 @@ def get_response(msg, lang):
             return "Ups ! Hubo un error. Intente decir algo más simple."
         
     elif lang == 'fr':
-        chat.set_chat_lang('fr')
         chat = model.start_chat(history=histoire)
         try:
             response = chat.send_message(msg)

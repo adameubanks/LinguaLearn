@@ -17,8 +17,10 @@ def french():
 
 @app.route("/get")
 def get_bot_response():    
-    userText = request.args.get('msg')  
-    response = gemini_pro.get_response(userText) 
+    userText = request.args.get('msg') 
+    userLang = request.referrer[-2:]
+    print(userLang)
+    response = gemini_pro.get_response(userText, userLang) 
     return response
 
 

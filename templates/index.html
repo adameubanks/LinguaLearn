@@ -4,4 +4,18 @@
 <br><br><br>
 <h1 align="center">Welcome to LinguaLearn!</h1>
 <h3 align="center">Click on a language to start practcing your speaking skills</h3>
+<br><br>
+<div class="container" align="center">
+    <div class="row" align="center">
+        <div class="col-lg-6" align="center">
+            <a href="{{ url_for('spanish') }}"><img src="/static/img/mexico.png" class="d-inline-block align-top" height="200" width="200"></a>
+            <br><h4>Spanish</h4>
+        </div>
+        <div class="col-lg-6" align="center">
+            <a href="{{ url_for('french') }}"><img src="/static/img/france.png" class="d-inline-block align-top" height="200" width="200"></a>
+            <br><h4>French</h4>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

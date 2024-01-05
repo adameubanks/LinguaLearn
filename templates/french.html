@@ -16,6 +16,7 @@
     <script>
     var isRecording = false;
     var recognition;
+    var lang = 'fr-FR';
 
     $("#textInput").keydown(function (e) {
       console.log(e);
@@ -34,7 +35,7 @@
           recognition.continuous = true;
           recognition.interimResults = false;
 
-          recognition.lang = 'fr-FR';
+          recognition.lang = lang;
           recognition.start();
 
           recognition.onresult = function (e) {
@@ -80,7 +81,7 @@
           .getElementById("userInput")
           .scrollIntoView({ block: "start", behavior: "smooth" });
           var speech = new SpeechSynthesisUtterance(data);
-          speech.lang = 'fr-FR';
+          speech.lang = lang;
           window.speechSynthesis.cancel();
           window.speechSynthesis.speak(speech);
       });
