@@ -8,13 +8,13 @@ genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
 historia = [{"parts":
-      [{"text": "Eres un chatbot español. Tu objetivo es hablar conmigo en español para ayudarme a practicar mi español. Lo harás haciéndome preguntas basadas en mis respuestas y yo te responderé. Intenta conocerme. Si cometo errores gramaticales, me corregirás. Tendremos una conversación. Mantendrás la conversación haciéndome una pregunta después de cada respuesta que dé. No responderás en más de 4 frases. ¡Vamos! Empiece por saludarme."}],
+      [{"text": "Eres un chatbot español. Tu objetivo es hablar conmigo en español. Me corregirás si cometo errores y me ayudarás a expresarme en el idioma español. Me ayudarás a hacer preguntas sobre mis aficiones, mi familia, el tiempo, etc. y te responderé. Si me equivoco, me corregirás. Tendremos una conversación. Me harás una pregunta después de cada frase que diga. No responderás en más de 4 frases. ¡Vamos! Empezar por saludando."}],
          "role": "user"},
      {"parts":
      [{"text": "Hola, soy tu profesora de español. Te voy a hacer unas preguntas para que aprendas a hablar español. ¿Cómo estás?"}],
          "role": "model"}]
 histoire = [{"parts":
-    [{"text": "Vous êtes un chatbot français. Votre objectif est de parler avec moi en français pour m'aider à pratiquer mon français. Vous le ferez en me posant des questions basées sur mes réponses, et je vous répondrai. Essayez de me connaître. Si je fais des fautes de grammaire, vous me corrigerez. Nous aurons une conversation. Vous poursuivrez la conversation en me posant une question après chaque réponse que je donne. Vous ne répondrez pas en plus de 4 phrases. C'est parti ! Commencez par dire bonjour."}], 
+    [{"text": "Vous êtes un chatbot français. Votre objectif est de parler avec moi en français. Vous allez me corriger si je fais des erreurs et vous allez m'aider à m'exprimer dans la langue française. Vous allez me poser des questions sur mes loisirs, ma famille, la méteo, etc. et je vais vous répondre. Si je fais des erreurs, vous allez me corriger. On va tenir une conversation. Vous allez me poser une question après chaque phrase que je dis. Vous ne répondrez pas en plus de 4 phrases. C'est parti ! Commencez par me dire bonjour."}], 
         "role": "user"},
     {"parts": 
     [{"text": "Bonjour, je suis votre professeur de français. Je vais vous poser des questions pour que vous puissiez apprendre à parler français. Comment allez-vous ?"}],
@@ -39,15 +39,20 @@ def get_response(msg, lang):
             response = chat.send_message(msg)
             respuesta = response.text.replace("*","")
             return respuesta
+            respuesta = response.text.replace("*","")
+            return respuesta
         except genai.types.generation_types.BlockedPromptException:
             return "¡Eso no es agradable! Intenta decir algo más amable."
         except:
+            return "Ups ! Hubo un error. Intenta decir algo más simple."
             return "Ups ! Hubo un error. Intenta decir algo más simple."
         
     elif lang == 'fr':
         chat = model.start_chat(history=histoire)
         try:
             response = chat.send_message(msg)
+            reponse = response.text.replace("*","")
+            return reponse
             reponse = response.text.replace("*","")
             return reponse
         except genai.types.generation_types.BlockedPromptException:
@@ -67,6 +72,15 @@ def get_response(msg, lang):
             return "Oops! There was an error. Please try to say something again"
         
     elif lang == 'de':
+        chat = model.start_chat(history=historie)
+        try:
+            response = chat.send_message(msg)
+            antwort = response.text.replace("*","")
+            return antwort
+        except genai.types.generation_types.BlockedPromptException:
+            return "Das ist nicht nett! Versuchen Sie, etwas Netteres zu sagen."
+        except:
+            return "Ups! Es gab einen Fehler. Versuchen Sie, etwas Einfacheres zu sagen."
         chat = model.start_chat(history=historie)
         try:
             response = chat.send_message(msg)
